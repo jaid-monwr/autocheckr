@@ -1,19 +1,15 @@
 import { NextResponse } from "next/server";
-import connect from "@/utils/db";
-import Test from "@/models/Test";
+const pool = require("@/utils/db");
 
 export const GET = async (request) => {
   //   const url = new URL(request.url);
-
   //   const username = url.searchParams.get("username");
 
   try {
-    await connect();
+    const tests = await pool.query("SELECT * FROM Teacher", []);
+    console.log(tests)
 
-    // const tests = await Post.find(username && { username });
-    const tests = await Test.find();
-
-    return new NextResponse(JSON.stringify(tests), { status: 200 });
+    return new NextResponse(JSON.stringify(tests.rows), { status: 200 });
   } catch (err) {
     return new NextResponse("Database Error", { status: 500 });
   }

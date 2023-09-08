@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
+const { Pool } = require("pg");
 
-const connect = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO);
-  } catch (error) {
-    throw new Error("Connection failed!");
-  }
-};
+const pool = new Pool({
+  user: "postgres",
+  password: "npixNuyTgHdNP5bc",
+  host: "db.bavhvxjuaanvtyoppmey.supabase.co",
+  port: 5432,
+  database: "postgres",
+});
 
-export default connect;
+module.exports = pool;
