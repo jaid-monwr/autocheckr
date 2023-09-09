@@ -1,18 +1,18 @@
 import { NextResponse } from "next/server";
-const pool = require("@/utils/db");
+const query = require("@/utils/query");
 
 export const GET = async (request) => {
-  //   const url = new URL(request.url);
-  //   const username = url.searchParams.get("username");
+    const url = new URL(request.url);
+    const email = url.searchParams.get("email");
 
-  try {
-    const tests = await pool.query("SELECT * FROM Teacher", []);
-    console.log(tests)
+    try {
+        const tests = await query.getTeacherTests(email);
+        console.log(tests.rows);
 
-    return new NextResponse(JSON.stringify(tests.rows), { status: 200 });
-  } catch (err) {
-    return new NextResponse("Database Error", { status: 500 });
-  }
+        return new NextResponse(JSON.stringify(tests.rows), { status: 200 });
+    } catch (err) {
+        return new NextResponse("Database Error", { status: 500 });
+    }
 };
 
 // export const POST = async (request) => {
