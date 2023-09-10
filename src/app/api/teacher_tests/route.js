@@ -15,18 +15,16 @@ export const GET = async (request) => {
     }
 };
 
-// export const POST = async (request) => {
-//   const body = await request.json();
-
-//   const newPost = new Post(body);
-
-//   try {
-//     await connect();
-
-//     await newPost.save();
-
-//     return new NextResponse("Test has been created", { status: 201 });
-//   } catch (err) {
-//     return new NextResponse("Database Error", { status: 500 });
-//   }
-// };
+// Expected format:
+// { classID, name, duration, scripttemplate, sampleanswer, maxmarks }
+// duration in mintes, scripttemplate and sampleanswer are links
+export const POST = async (request) => {
+    const {classID, name, duration, scripttemplate, sampleanswer, maxmarks} = await request.json();
+    try {
+        const test = await query.insertTest(classID, name, duration, scripttemplate, sampleanswer, maxmarks);
+        console.log(test.rows);
+        return new NextResponse(JSON.stringify(test.rows), { status: 201 });
+    } catch (err) {
+        return new NextResponse("Database Error", { status: 500 });
+    }
+};
