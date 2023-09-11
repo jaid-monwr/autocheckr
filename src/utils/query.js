@@ -124,6 +124,30 @@ async function insertSubmission(testid, email, handwrittenscript) {
     }
 }
 
+async function searchTeachers(email, password) {
+    const sql = `
+    SELECT * FROM Teacher WHERE email = $1 AND password = $2;
+    `;
+    try {
+        return await pool.query(sql, [email, password]);
+    } catch(err) {
+        console.log(err);
+        return {};
+    }
+}
+
+async function searchStudents(email, password) {
+    const sql = `
+    SELECT * FROM Student WHERE email = $1 AND password = $2;
+    `;
+    try {
+        return await pool.query(sql, [email, password]);
+    } catch(err) {
+        console.log(err);
+        return {};
+    }
+}
+
 module.exports = {
     getTeacherTests, 
     getAllStudentTests,
@@ -131,5 +155,7 @@ module.exports = {
     getTakenTests,
     getSingleTakenTest,
     insertTest,
-    insertSubmission
+    insertSubmission,
+    searchTeachers,
+    searchStudents
 }
